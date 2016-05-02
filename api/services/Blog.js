@@ -11,7 +11,7 @@
    content: String,
    timestamp : { type: Date, default: Date.now },
    tags: [String],
-  //  avatar: { data: Buffer, contentType: String },
+  //  image: { data: Buffer, contentType: String },
  });
 
  module.exports = mongoose.model("Blog", schema);
