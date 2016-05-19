@@ -61,12 +61,12 @@ var model = {
   getOne:function(data,callback){
     this.findOne({
       _id:data._id
-    },function(err,data2){
+    },function(err,data){
       if (err) {
         console.log(err);
         callback(err, null);
       } else {
-        callback(null, data2);
+        callback(null, data);
       }
     });
   },

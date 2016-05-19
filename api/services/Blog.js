@@ -11,6 +11,15 @@
    content: String,
    timestamp : { type: Date, default: Date.now },
    tags: [String],
+   name: {
+        type: String,
+        required: true
+      },
+      eggs: {
+        type: Number,
+        min: [6, 'Too few eggs'],
+        max: 12
+      },
   //  image: { data: Buffer, contentType: String },
  });
 
@@ -19,6 +28,18 @@
 var model = {
   saveData: function(data, callback) {
     var blog = this(data);
+    if (data._id) {
+      this.findOneAndUpdate({
+        _id:data._id
+      },data,function(err,data2){
+        if (err) {
+          console.log(err);
+          callback(err, null);
+        } else {
+          callback(null, data2);
+        }
+      });
+    } else {
       blog.save(function(err, data2) {
         if (err) {
           console.log(err);
@@ -27,10 +48,13 @@ var model = {
           callback(null, data2);
         }
       });
+    }
     },
 
     getAll:function(data,callback){
-      this.find(function(err,data2){
+      this.find({
+        tags:data.search
+      },function(err,data2){
         if (err) {
           console.log(err);
           callback(err, null);
